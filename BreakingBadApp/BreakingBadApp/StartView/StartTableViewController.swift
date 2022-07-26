@@ -9,34 +9,30 @@ import UIKit
 
 class StartTableViewController: UITableViewController {
     
-    let cellIdentifier = "cellIndex"
+    var charactersList: [Character] = []
+    var presenter: CharacterViewControllerPresenterProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.register(CharacterTableViewCell.self, forCellReuseIdentifier: CharacterTableViewCell.cellIdentifier)
+        presenter = CharacterStarViewControllerPresenter(characters: charactersList, view: self)
+        presenter.getCharacterList()
         view.backgroundColor = .white
+        tableView.rowHeight = 100
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-      2
+        presenter.numberOfRows()
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: CharacterTableViewCell.cellIdentifier, for: indexPath) as! CharacterTableViewCell
+        cell.character = presenter.getCharacter(at: indexPath)
         return cell
     }
-    
-    /*
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
 
-        // Configure the cell...
-
-        return cell
-    }
-    */
 
     /*
     // Override to support conditional editing of the table view.

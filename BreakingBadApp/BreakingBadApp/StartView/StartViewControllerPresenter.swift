@@ -6,19 +6,40 @@
 //
 
 import Foundation
-protocol CharacterViewControllerPresenterProtocol {
+protocol CharacterViewControllerPresenterProtocol: AnyObject {
+    func getCharacterList()
     func numberOfRows() -> Int
-    func cellViewModel(at indexPath: IndexPath) -> CharacterTableViewCellPresenterProtocol
+    func getCharacter(at indexPath: IndexPath) -> Character
+    init(characters: [Character], view: StartTableViewController)
 }
 
-class CharacterStarViewControllerPresenter: CharacterViewControllerPresenterProtocol {
+class CharacterStarViewControllerPresenter:
+    CharacterViewControllerPresenterProtocol {
+    private var characters: [Character]
+    unowned private var view: StartTableViewController
+    
+    required init(characters: [Character], view: StartTableViewController) {
+        self.characters = characters
+        self.view = view
+    }
+    
     func numberOfRows() -> Int {
-        <#code#>
+        characters.count
     }
     
-    func cellViewModel(at indexPath: IndexPath) -> CharacterTableViewCellPresenterProtocol {
-        <#code#>
+    func getCharacter(at indexPath: IndexPath) -> Character {
+        characters[indexPath.row]
     }
     
-    
+    func getCharacterList() {
+        NetworkManager.shared.fetchCharacters(from: Link.characters.rawValue) { [unowned self] result  in
+            switch result {
+            case .success(let characters):
+                self.characters = characters
+                self.view.tableView.reloadData()
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }

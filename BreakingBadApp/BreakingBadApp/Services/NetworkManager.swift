@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum NetworkError: Error {
     case invalidURL
@@ -16,27 +17,30 @@ enum NetworkError: Error {
 class NetworkManager {
     static var shared = NetworkManager()
     
-    func fetchCharacter(from url: String, completion: @escaping(Character) -> Void) {
-        guard let url = URL(string: url) else { return }
+    func fetchCharacters(from url: String, completion: @escaping(Result<[Character], NetworkError>) -> Void) {
+        guard let url = URL(string: url) else {
+            completion(.failure(.invalidURL))
+            return
+        }
         
         URLSession.shared.dataTask(with: url) { (data, _, error) in
             guard let data = data else {
-                print(error?.localizedDescription ?? "no description")
+                completion(.failure(.noData))
                 return
             }
             
             do {
-                let result = try JSONDecoder().decode(Character.self, from: data)
+                let characters = try JSONDecoder().decode([Character].self, from: data)
                 DispatchQueue.main.async {
-                    completion(result)
+                    completion(.success(characters))
                 }
-            } catch let error {
-                print(error)
+            } catch {
+                completion(.failure(.decodingError))
             }
         }.resume()
     }
     
-    func fetchEpisodes(from url: String, completion: @escaping(Episode) -> Void) {
+    func fetchEpisode(from url: String, completion: @escaping(Episode) -> Void) {
         guard let url = URL(string: url) else { return }
         
         URLSession.shared.dataTask(with: url) { (data, _, error) in
@@ -75,5 +79,12 @@ class NetworkManager {
             }
         }.resume()
     }
+    
+    func fetchImage(from character: Character) -> Data? {
+            guard let stringUrl = character.img else { return nil}
+            guard let imageUrl = URL(string: stringUrl) else { return nil}
+            return try? Data(contentsOf: imageUrl)
+    }
+    
     private init() {}
 }

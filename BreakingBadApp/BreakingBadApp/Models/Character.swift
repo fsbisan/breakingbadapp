@@ -8,17 +8,17 @@
 import Foundation
 
 struct Character: Decodable {
-    let id: String?
+    let id: Int?
     let name: String?
     let birthday: String?
-    let occupation: [String]
-    let img: URL?
+    let occupation: [String]?
+    let img: String?
     let status: String?
     let nickname: String?
     let appearance: [Int]?
     let portrayed: String?
     let category: String?
-    let betterCallSaulAppearance: [String]?
+    let betterCallSaulAppearance: [Int]?
     
     enum CodingKeys: String, CodingKey {
         case id = "char_id"
