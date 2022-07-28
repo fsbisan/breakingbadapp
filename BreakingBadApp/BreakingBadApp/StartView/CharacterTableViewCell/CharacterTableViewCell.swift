@@ -16,7 +16,6 @@ class CharacterTableViewCell: UITableViewCell {
     
     static var cellIdentifier = "CharacterTableViewCell"
     
-    
     var presenter: CharacterTableViewCellPresenterProtocol!
     var character: Character? {
         didSet {

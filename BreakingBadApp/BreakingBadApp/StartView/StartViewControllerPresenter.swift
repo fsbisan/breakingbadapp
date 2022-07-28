@@ -13,8 +13,7 @@ protocol CharacterViewControllerPresenterProtocol: AnyObject {
     init(characters: [Character], view: StartTableViewController)
 }
 
-class CharacterStarViewControllerPresenter:
-    CharacterViewControllerPresenterProtocol {
+class CharacterStarViewControllerPresenter {
     private var characters: [Character]
     unowned private var view: StartTableViewController
     
@@ -22,15 +21,9 @@ class CharacterStarViewControllerPresenter:
         self.characters = characters
         self.view = view
     }
-    
-    func numberOfRows() -> Int {
-        characters.count
-    }
-    
-    func getCharacter(at indexPath: IndexPath) -> Character {
-        characters[indexPath.row]
-    }
-    
+}
+
+extension CharacterStarViewControllerPresenter: CharacterViewControllerPresenterProtocol {
     func getCharacterList() {
         NetworkManager.shared.fetchCharacters(from: Link.characters.rawValue) { [unowned self] result  in
             switch result {
@@ -42,4 +35,13 @@ class CharacterStarViewControllerPresenter:
             }
         }
     }
+    
+    func numberOfRows() -> Int {
+        characters.count
+    }
+    
+    func getCharacter(at indexPath: IndexPath) -> Character {
+        characters[indexPath.row]
+    }
+    
 }
