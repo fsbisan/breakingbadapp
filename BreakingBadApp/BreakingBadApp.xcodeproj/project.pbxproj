@@ -25,6 +25,7 @@
 		9292C4FB289170E100A71A71 /* EpisodeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9292C4FA289170E100A71A71 /* EpisodeTableViewCell.swift */; };
 		9292C4FE2891714100A71A71 /* EpisodeTableViewCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9292C4FD2891714100A71A71 /* EpisodeTableViewCellPresenter.swift */; };
 		9292C5002892B3AA00A71A71 /* EpisodeInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9292C4FF2892B3AA00A71A71 /* EpisodeInfoViewController.swift */; };
+		9292C5032893851900A71A71 /* EpisodeInfoVCPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9292C5022893851900A71A71 /* EpisodeInfoVCPresenter.swift */; };
 		92DBFB31288D041B00B5C0D0 /* StartTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DBFB30288D041B00B5C0D0 /* StartTableViewController.swift */; };
 		92DBFB37288D0FBF00B5C0D0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DBFB36288D0FBF00B5C0D0 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 		9292C4FA289170E100A71A71 /* EpisodeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewCell.swift; sourceTree = "<group>"; };
 		9292C4FD2891714100A71A71 /* EpisodeTableViewCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewCellPresenter.swift; sourceTree = "<group>"; };
 		9292C4FF2892B3AA00A71A71 /* EpisodeInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeInfoViewController.swift; sourceTree = "<group>"; };
+		9292C5022893851900A71A71 /* EpisodeInfoVCPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeInfoVCPresenter.swift; sourceTree = "<group>"; };
 		92DBFB30288D041B00B5C0D0 /* StartTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTableViewController.swift; sourceTree = "<group>"; };
 		92DBFB36288D0FBF00B5C0D0 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,6 +158,7 @@
 		9292C5012892B3B600A71A71 /* EpisodeInfoView */ = {
 			isa = PBXGroup;
 			children = (
+				9292C5022893851900A71A71 /* EpisodeInfoVCPresenter.swift */,
 				9292C4FF2892B3AA00A71A71 /* EpisodeInfoViewController.swift */,
 			);
 			path = EpisodeInfoView;
@@ -283,6 +286,7 @@
 				9292C4F628916B8A00A71A71 /* EpisodesTableVCPresenter.swift in Sources */,
 				9292C4EF2890105B00A71A71 /* CharacterViewControllerPresenter.swift in Sources */,
 				9292C4F928916BCF00A71A71 /* EpisodesTableViewController.swift in Sources */,
+				9292C5032893851900A71A71 /* EpisodeInfoVCPresenter.swift in Sources */,
 				928BEF31288D83BC0000F3C5 /* Quote.swift in Sources */,
 				9267F06C288D45E70037CD2B /* Character.swift in Sources */,
 			);

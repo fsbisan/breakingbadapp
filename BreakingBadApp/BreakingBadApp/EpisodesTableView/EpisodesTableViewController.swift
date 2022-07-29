@@ -7,10 +7,6 @@
 
 import UIKit
 
-protocol EpisodesTableViewControllerProtocol: AnyObject {
-    func showLabelsText(from string: [String])
-}
-
 class EpisodesTableViewController: UITableViewController {
 
     var episodesList: [Episode] = []
@@ -23,11 +19,33 @@ class EpisodesTableViewController: UITableViewController {
         presenter = EpisodesTableVCPresenter(view: self, episodes: episodesList, characterName: character)
         presenter.getEpisodesList()
         view.backgroundColor = .white
+        setupNavigationBar()
         tableView.rowHeight = 50
     }
 
     // MARK: - Table view data source
 
+    private func setupNavigationBar() {
+        
+        let navBarAppearance = UINavigationBarAppearance()
+        
+        navBarAppearance.backgroundColor = .white
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "back",
+            style: .plain,
+            target: self,
+            action: #selector(closeView)
+            )
+    }
+    
+    @objc private func closeView() {
+        dismiss(animated: true)
+    }
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter.numberOfRows()
     }
@@ -37,11 +55,12 @@ class EpisodesTableViewController: UITableViewController {
         cell.episode = presenter.getEpisode(at: indexPath)
         return cell
     }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    }
-}
-
-extension EpisodesTableViewController: EpisodesTableViewControllerProtocol {
-    func showLabelsText(from string: [String]) {
+        let episodeInfoVC = EpisodeInfoViewController()
+        episodeInfoVC.episode = presenter.getEpisode(at: indexPath)
+        let epsiodeNavContrVC = UINavigationController(rootViewController: episodeInfoVC)
+        epsiodeNavContrVC.modalPresentationStyle = .fullScreen
+        present(epsiodeNavContrVC, animated: true)
     }
 }

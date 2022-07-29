@@ -11,7 +11,7 @@ protocol EpisodesTableVCPresenterProtocol {
     func getEpisodesList()
     func numberOfRows() -> Int
     func getEpisode(at indexPath: IndexPath) -> Episode
-    func filterEpisodes() -> [Episode]
+    func filterEpisodes(episodes: [Episode]) -> [Episode]
     init(view: EpisodesTableViewController, episodes: [Episode], characterName: String?)
 }
 
@@ -30,11 +30,12 @@ class EpisodesTableVCPresenter {
 
 extension EpisodesTableVCPresenter: EpisodesTableVCPresenterProtocol {
     
-    func filterEpisodes() -> [Episode] {
+    func filterEpisodes(episodes: [Episode]) -> [Episode] {
         var filteredEpisodes: [Episode] = []
         for episode in episodes {
             guard let characterName = characterName else { return [] }
-            if ((episode.characters?.contains(characterName)) != nil) {
+            guard let charactersInEpisode = episode.characters else { return [] }
+            if charactersInEpisode.contains(characterName) {
                 filteredEpisodes.append(episode)
             }
         }
@@ -45,7 +46,12 @@ extension EpisodesTableVCPresenter: EpisodesTableVCPresenterProtocol {
         NetworkManager.shared.fetchEpisodes(from: Link.episodes.rawValue) { [unowned self] result in
             switch result {
             case .success(let episodes):
-                self.episodes = episodes
+                if characterName != nil {
+                    let filteredEpisodes = filterEpisodes(episodes: episodes)
+                    self.episodes = filteredEpisodes
+                } else {
+                    self.episodes = episodes
+                }
                 self.view.tableView.reloadData()
             case .failure(let error):
                 print(error)

@@ -40,6 +40,33 @@ class NetworkManager {
         }.resume()
     }
     
+    
+    func fetchCharacter(byName name: String, completion: @escaping(Result<[Character], NetworkError>) -> Void) {
+        let urlString = "https://www.breakingbadapi.com/api/characters?name=\(name)"
+        
+        guard let url = URL(string: urlString) else {
+            completion(.failure(.invalidURL))
+            return
+        }
+        
+        URLSession.shared.dataTask(with: url) { (data, _, error) in
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            do {
+                let character = try JSONDecoder().decode([Character].self, from: data)
+                DispatchQueue.main.async {
+                    completion(.success(character))
+                }
+            } catch {
+                completion(.failure(.decodingError))
+            }
+        }.resume()
+    }
+    
+    
     func fetchEpisodes(from url: String, completion: @escaping(Result<[Episode], NetworkError>) -> Void) {
         guard let url = URL(string: url) else {
             completion(.failure(.invalidURL))
