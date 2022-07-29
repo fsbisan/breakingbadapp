@@ -27,19 +27,22 @@ class CharacterTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupSubviews(characterImageView, nameOfCharacterLabel)
+        setupSubviews(characterImageView, nameOfCharacterLabel, spinnerView)
         backgroundColor = .white
         setConstraints()
-    }
-    
-    override class func awakeFromNib() {
-        super.awakeFromNib()
-        
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    private lazy var spinnerView: UIActivityIndicatorView = {
+        let spinnerView = UIActivityIndicatorView(style: .large)
+        spinnerView.color = .systemGray
+        spinnerView.startAnimating()
+        spinnerView.hidesWhenStopped = true
+        return spinnerView
+    }()
     
     private lazy var characterImageView: UIImageView = {
         let image = UIImageView()
@@ -70,12 +73,18 @@ class CharacterTableViewCell: UITableViewCell {
         
         nameOfCharacterLabel.translatesAutoresizingMaskIntoConstraints = false
         characterImageView.translatesAutoresizingMaskIntoConstraints = false
+        spinnerView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
             characterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
             characterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
             characterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
             characterImageView.widthAnchor.constraint(equalToConstant: 70),
+            
+            spinnerView.centerXAnchor.constraint(equalTo: characterImageView.centerXAnchor),
+            spinnerView.centerYAnchor.constraint(equalTo: characterImageView.centerYAnchor),
+            spinnerView.heightAnchor.constraint(equalToConstant: 20),
+            spinnerView.widthAnchor.constraint(equalToConstant: 20),
             
             nameOfCharacterLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
             nameOfCharacterLabel.leadingAnchor.constraint(equalTo: characterImageView.trailingAnchor, constant: 10),
@@ -92,5 +101,6 @@ extension CharacterTableViewCell: CharacterTableViewCellProtocol {
     func showImage(data: Data) {
         guard let image = UIImage(data: data) else { return }
         characterImageView.image = image
+        spinnerView.stopAnimating()
     }
 }

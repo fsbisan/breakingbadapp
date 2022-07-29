@@ -1,5 +1,5 @@
 //
-//  CharacterTableViewPresenter.swift
+//  CharacterTableViewCellPresenter.swift
 //  BreakingBadApp
 //
 //  Created by Александр Макаров on 24.07.2022.
