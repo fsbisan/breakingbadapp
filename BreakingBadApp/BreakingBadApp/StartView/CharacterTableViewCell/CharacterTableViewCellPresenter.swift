@@ -14,7 +14,7 @@ protocol CharacterTableViewCellPresenterProtocol: AnyObject {
 
 class CharacterTableViewCellPresenter: CharacterTableViewCellPresenterProtocol {
     
-    unowned private let view: CharacterTableViewCellProtocol
+    weak private var view: CharacterTableViewCellProtocol?
     private let character: Character?
     
     required init(view: CharacterTableViewCellProtocol, character: Character?) {
@@ -27,7 +27,8 @@ class CharacterTableViewCellPresenter: CharacterTableViewCellPresenterProtocol {
         DispatchQueue.global().async {
             guard let imageData = NetworkManager.shared.fetchImage(from: character) else { return }
             DispatchQueue.main.async {
-                self.view.showImage(data: imageData)
+                guard self.view != nil else { return }
+                self.view?.showImage(data: imageData)
             }
         }
     }
@@ -35,7 +36,8 @@ class CharacterTableViewCellPresenter: CharacterTableViewCellPresenterProtocol {
     func setName() {
         guard let character = character else { return }
         guard let name = character.name else { return }
-        view.showName(characterName: name)
+        guard self.view != nil else { return }
+        view?.showName(characterName: name)
     }
     
 }

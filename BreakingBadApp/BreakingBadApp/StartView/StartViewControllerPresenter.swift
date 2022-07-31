@@ -9,13 +9,13 @@ import Foundation
 protocol CharacterViewControllerPresenterProtocol: AnyObject {
     func getCharacterList()
     func numberOfRows() -> Int
-    func getCharacter(at indexPath: IndexPath) -> Character
+    func getCharacter(at indexPath: IndexPath) -> Character?
     init(characters: [Character], view: StartTableViewController)
 }
 
 class CharacterStarViewControllerPresenter {
-    private var characters: [Character]
-    unowned private var view: StartTableViewController
+    private var characters: [Character]?
+    weak private var view: StartTableViewController?
     
     required init(characters: [Character], view: StartTableViewController) {
         self.characters = characters
@@ -25,11 +25,13 @@ class CharacterStarViewControllerPresenter {
 
 extension CharacterStarViewControllerPresenter: CharacterViewControllerPresenterProtocol {
     func getCharacterList() {
-        NetworkManager.shared.fetchCharacters(from: Link.characters.rawValue) { [unowned self] result  in
+        NetworkManager.shared.fetchCharacters(from: Link.characters.rawValue) { [weak self] result  in
             switch result {
             case .success(let characters):
-                self.characters = characters
-                self.view.tableView.reloadData()
+                guard self?.view != nil else { return }
+                guard self?.characters != nil else { return }
+                self?.characters = characters
+                self?.view?.tableView.reloadData()
             case .failure(let error):
                 print(error)
             }
@@ -37,11 +39,12 @@ extension CharacterStarViewControllerPresenter: CharacterViewControllerPresenter
     }
     
     func numberOfRows() -> Int {
-        characters.count
+        characters?.count ?? 0
     }
     
-    func getCharacter(at indexPath: IndexPath) -> Character {
-        characters[indexPath.row]
+    func getCharacter(at indexPath: IndexPath) -> Character? {
+        guard let character = characters?[indexPath.row] else { return nil }
+        return character
     }
     
 }

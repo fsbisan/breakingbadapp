@@ -12,7 +12,7 @@ protocol EpisodeTableViewCellProtocol: AnyObject {
 }
 
 class EpisodeTableViewCell: UITableViewCell {
-    static var cellIdentifier = "EpisodeTableViewCell"
+    static let cellIdentifier = "EpisodeTableViewCell"
     
     var presenter: EpisodeTableViewCellPresenterProtocol!
     var episode: Episode? {
@@ -46,10 +46,6 @@ class EpisodeTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
     }
     
     private func setupSubviews(_ subviews: UIView...) {

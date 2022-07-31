@@ -26,6 +26,8 @@
 		9292C4FE2891714100A71A71 /* EpisodeTableViewCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9292C4FD2891714100A71A71 /* EpisodeTableViewCellPresenter.swift */; };
 		9292C5002892B3AA00A71A71 /* EpisodeInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9292C4FF2892B3AA00A71A71 /* EpisodeInfoViewController.swift */; };
 		9292C5032893851900A71A71 /* EpisodeInfoVCPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9292C5022893851900A71A71 /* EpisodeInfoVCPresenter.swift */; };
+		929897E32896327D00BF140D /* RootCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929897E22896327D00BF140D /* RootCollectionViewCell.swift */; };
+		929897E62896432300BF140D /* RootCollectionViewCellPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 929897E52896432300BF140D /* RootCollectionViewCellPresenter.swift */; };
 		92DBFB31288D041B00B5C0D0 /* StartTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DBFB30288D041B00B5C0D0 /* StartTableViewController.swift */; };
 		92DBFB37288D0FBF00B5C0D0 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92DBFB36288D0FBF00B5C0D0 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
@@ -52,6 +54,8 @@
 		9292C4FD2891714100A71A71 /* EpisodeTableViewCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeTableViewCellPresenter.swift; sourceTree = "<group>"; };
 		9292C4FF2892B3AA00A71A71 /* EpisodeInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeInfoViewController.swift; sourceTree = "<group>"; };
 		9292C5022893851900A71A71 /* EpisodeInfoVCPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeInfoVCPresenter.swift; sourceTree = "<group>"; };
+		929897E22896327D00BF140D /* RootCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCollectionViewCell.swift; sourceTree = "<group>"; };
+		929897E52896432300BF140D /* RootCollectionViewCellPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootCollectionViewCellPresenter.swift; sourceTree = "<group>"; };
 		92DBFB30288D041B00B5C0D0 /* StartTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartTableViewController.swift; sourceTree = "<group>"; };
 		92DBFB36288D0FBF00B5C0D0 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,8 +134,9 @@
 		9292C4F2289161BD00A71A71 /* RootView */ = {
 			isa = PBXGroup;
 			children = (
-				9292C4F0289161B900A71A71 /* RootCollectionViewController.swift */,
 				9292C4F3289161FC00A71A71 /* RootCollectionVCPresenter.swift */,
+				9292C4F0289161B900A71A71 /* RootCollectionViewController.swift */,
+				929897E42896382A00BF140D /* RootCollectionViewCell */,
 			);
 			path = RootView;
 			sourceTree = "<group>";
@@ -162,6 +167,15 @@
 				9292C4FF2892B3AA00A71A71 /* EpisodeInfoViewController.swift */,
 			);
 			path = EpisodeInfoView;
+			sourceTree = "<group>";
+		};
+		929897E42896382A00BF140D /* RootCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				929897E52896432300BF140D /* RootCollectionViewCellPresenter.swift */,
+				929897E22896327D00BF140D /* RootCollectionViewCell.swift */,
+			);
+			path = RootCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		92DBFB32288D0F5300B5C0D0 /* App */ = {
@@ -272,6 +286,7 @@
 			files = (
 				9292C4F4289161FC00A71A71 /* RootCollectionVCPresenter.swift in Sources */,
 				9292C4FB289170E100A71A71 /* EpisodeTableViewCell.swift in Sources */,
+				929897E62896432300BF140D /* RootCollectionViewCellPresenter.swift in Sources */,
 				9292C4F1289161B900A71A71 /* RootCollectionViewController.swift in Sources */,
 				92DBFB37288D0FBF00B5C0D0 /* NetworkManager.swift in Sources */,
 				928BEF33288D8F780000F3C5 /* CharacterTableViewCell.swift in Sources */,
@@ -284,6 +299,7 @@
 				9292C4EC288FF7C500A71A71 /* CharacterViewController.swift in Sources */,
 				928BEF2F288D81930000F3C5 /* Episode.swift in Sources */,
 				9292C4F628916B8A00A71A71 /* EpisodesTableVCPresenter.swift in Sources */,
+				929897E32896327D00BF140D /* RootCollectionViewCell.swift in Sources */,
 				9292C4EF2890105B00A71A71 /* CharacterViewControllerPresenter.swift in Sources */,
 				9292C4F928916BCF00A71A71 /* EpisodesTableViewController.swift in Sources */,
 				9292C5032893851900A71A71 /* EpisodeInfoVCPresenter.swift in Sources */,

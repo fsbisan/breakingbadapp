@@ -59,10 +59,6 @@ class CharacterTableViewCell: UITableViewCell {
         return label
     }()
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-    
     private func setupSubviews(_ subviews: UIView...) {
         subviews.forEach { subview in
             contentView.addSubview(subview)

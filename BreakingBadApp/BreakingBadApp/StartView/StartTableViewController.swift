@@ -19,6 +19,7 @@ class StartTableViewController: UITableViewController {
         presenter.getCharacterList()
         view.backgroundColor = .white
         tableView.rowHeight = 100
+        setupNavigationBar()
     }
 
     // MARK: - Table view data source
@@ -39,5 +40,32 @@ class StartTableViewController: UITableViewController {
         let characterNavContrVC = UINavigationController(rootViewController: characterVC)
         characterNavContrVC.modalPresentationStyle = .fullScreen
         present(characterNavContrVC, animated: true)
+    }
+    
+    private func setupNavigationBar() {
+        
+        let navBarAppearance = UINavigationBarAppearance()
+        
+        navBarAppearance.backgroundColor = .white
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.standardAppearance = navBarAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = navBarAppearance
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "back",
+            style: .plain,
+            target: self,
+            action: #selector(closeView)
+            )
+    }
+    
+    @objc private func closeView() {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.view.window!.layer.add(transition, forKey: nil)
+        dismiss(animated: true)
     }
 }

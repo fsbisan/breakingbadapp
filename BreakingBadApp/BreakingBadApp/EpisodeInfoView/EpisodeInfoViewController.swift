@@ -66,6 +66,7 @@ class EpisodeInfoViewController: UIViewController {
         tableView.register(CharacterTableViewCell.self, forCellReuseIdentifier: CharacterTableViewCell.cellIdentifier)
         tableView.rowHeight = 100
         tableView.dataSource = self
+        tableView.delegate = self
         return tableView
     }()
     
@@ -162,7 +163,7 @@ class EpisodeInfoViewController: UIViewController {
     }
 }
 
-extension EpisodeInfoViewController: EpisodeInfoVCProtocol, UITableViewDataSource {
+extension EpisodeInfoViewController: EpisodeInfoVCProtocol, UITableViewDataSource, UITableViewDelegate {
     
     func showTitle(textsForLabels: [String]) {
         topTitleLabel.text = textsForLabels[0]
@@ -180,5 +181,13 @@ extension EpisodeInfoViewController: EpisodeInfoVCProtocol, UITableViewDataSourc
         let cell = tableView.dequeueReusableCell(withIdentifier: CharacterTableViewCell.cellIdentifier, for: indexPath) as! CharacterTableViewCell
         cell.character = presenter.getCharacter(at: indexPath)
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let characterVC = CharacterViewController()
+        characterVC.character = presenter.getCharacter(at: indexPath)
+        let characterNavContrVC = UINavigationController(rootViewController: characterVC)
+        characterNavContrVC.modalPresentationStyle = .fullScreen
+        present(characterNavContrVC, animated: true)
     }
 }
