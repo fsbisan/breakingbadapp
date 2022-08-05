@@ -10,6 +10,7 @@ import UIKit
 protocol CharacterViewControllerProtocol {
     func showImage(from data: Data)
     func showLabelsText(from string: [String])
+    func showErrorImage()
 }
 
 class CharacterViewController: UIViewController {
@@ -139,7 +140,13 @@ class CharacterViewController: UIViewController {
         )
     }
     
-    @objc func closeView() {
+    @objc private func closeView() {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.view.window!.layer.add(transition, forKey: nil)
         dismiss(animated: true)
     }
     
@@ -221,6 +228,10 @@ extension CharacterViewController: CharacterViewControllerProtocol {
         guard let image = UIImage(data: data) else { return }
         characterImageView.image = image
         spinnerView.stopAnimating()
+    }
+    
+    func showErrorImage() {
+        characterImageView.image = UIImage(named: "garryPotter")
     }
     
     func showLabelsText(from string: [String]) {

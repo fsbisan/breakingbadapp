@@ -20,6 +20,7 @@ class StartTableViewController: UITableViewController {
         view.backgroundColor = .white
         tableView.rowHeight = 100
         setupNavigationBar()
+        URLCache.shared.diskCapacity = 25000000
     }
 
     // MARK: - Table view data source

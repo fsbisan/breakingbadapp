@@ -88,6 +88,12 @@ class EpisodeInfoViewController: UIViewController {
     }
     
     @objc private func closeView() {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromLeft
+        self.view.window!.layer.add(transition, forKey: nil)
         dismiss(animated: true)
     }
     

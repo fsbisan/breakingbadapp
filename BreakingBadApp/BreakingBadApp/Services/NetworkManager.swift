@@ -130,11 +130,28 @@ class NetworkManager {
         }.resume()
     }
     
-    func fetchImage(from character: Character) -> Data? {
-            guard let stringUrl = character.img else { return nil}
-            guard let imageUrl = URL(string: stringUrl) else { return nil}
-            return try? Data(contentsOf: imageUrl)
-    }
-    
     private init() {}
+}
+
+class ImageManager {
+    static var shared = ImageManager()
+    
+    init(){}
+
+    func fetchImage(from character: Character, completion: @escaping(Data, URLResponse) -> Void) {
+        guard let stringUrl = character.img else { return }
+        guard let url = URL(string: stringUrl) else { return }
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, let response = response else {
+                print(error?.localizedDescription ?? "No error description")
+                return
+            }
+            
+            guard url == response.url else { return }
+            DispatchQueue.main.async {
+                completion(data, response)
+            }
+            
+        }.resume()
+    }
 }

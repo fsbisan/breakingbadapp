@@ -10,6 +10,7 @@ import UIKit
 protocol CharacterTableViewCellProtocol: AnyObject {
     func showImage(data: Data)
     func showName(characterName: String)
+    func showErrorImage()
 }
 
 class CharacterTableViewCell: UITableViewCell {
@@ -64,7 +65,9 @@ class CharacterTableViewCell: UITableViewCell {
             contentView.addSubview(subview)
         }
     }
-   
+    override func prepareForReuse() {
+        characterImageView.image = nil
+    }
     private func setConstraints() {
         
         nameOfCharacterLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -89,7 +92,12 @@ class CharacterTableViewCell: UITableViewCell {
     }
 }
 
+
 extension CharacterTableViewCell: CharacterTableViewCellProtocol {
+    func showErrorImage() {
+        characterImageView.image = UIImage(named: "garryPotter")
+    }
+    
     func showName(characterName: String) {
         nameOfCharacterLabel.text = characterName
     }

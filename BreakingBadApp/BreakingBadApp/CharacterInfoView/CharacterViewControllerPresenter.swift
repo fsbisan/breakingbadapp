@@ -15,7 +15,7 @@ protocol CharacterInfoViewControllerPresenterProtocol {
 
 class CharacterViewControllerPresenter {
     
-    private let view: CharacterViewControllerProtocol
+    private let view: CharacterViewControllerProtocol?
     private let character: Character
     
     required init(view: CharacterViewControllerProtocol, character: Character) {
@@ -95,15 +95,45 @@ class CharacterViewControllerPresenter {
 extension CharacterViewControllerPresenter: CharacterInfoViewControllerPresenterProtocol {
     
     func setUpImage() {
-        DispatchQueue.global().async {
-            guard let imageData = NetworkManager.shared.fetchImage(from: self.character) else { return }
-            DispatchQueue.main.async {
-                self.view.showImage(from: imageData)
-            }
+        guard let stringUrl = character.img else { return }
+        
+        guard let url = URL(string: stringUrl) else {
+            guard self.view != nil else { return }
+            self.view?.showErrorImage()
+            return
+        }
+        
+        // Используем изображение из кеша, если оно там есть
+        if let cachedImageData = getCachedImage(from: url) {
+            guard self.view != nil else { return }
+            self.view?.showImage(from: cachedImageData)
+            return
+        }
+        // Если изображения нет в кэше то загружаем из сети
+        ImageManager.shared.fetchImage(from: character) { data, response in
+            guard self.view != nil else { return }
+            self.view?.showImage(from: data)
+            self.saveDataToCache(with: data, and: response)
         }
     }
     
+    private func saveDataToCache(with data: Data, and response: URLResponse) {
+        guard let url = response.url else { return }
+        let urlRequest = URLRequest(url: url)
+        let cachedResponse = CachedURLResponse(response: response, data: data)
+        
+        URLCache.shared.storeCachedResponse(cachedResponse, for: urlRequest)
+    }
+    
+    private func getCachedImage(from url: URL) -> Data? {
+        let request = URLRequest(url: url)
+        if let cachedResponse = URLCache.shared.cachedResponse(for: request) {
+            return cachedResponse.data
+        }
+        return nil
+    }
+    
     func setupLabelsText() {
-        view.showLabelsText(from: getArrayOfStringsFromCharacter(character: character)) 
+        view?.showLabelsText(from: getArrayOfStringsFromCharacter(character: character))
     }
 }
