@@ -11,6 +11,7 @@ class RootCollectionViewController: UICollectionViewController, UICollectionView
 
     private var presenter: RootCollectionVCPresenterProtocol!
     private var userActions = UserActions.allCases
+    private let transition = TransitionManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,10 +42,12 @@ class RootCollectionViewController: UICollectionViewController, UICollectionView
         case .showCharacters:
             let NavVC = UINavigationController(rootViewController: StartTableViewController())
             NavVC.modalPresentationStyle = .fullScreen
+            NavVC.transitioningDelegate = self.transition
             present(NavVC, animated: true)
         case .showEpisodes:
             let NavVC = UINavigationController(rootViewController: EpisodesTableViewController())
             NavVC.modalPresentationStyle = .fullScreen
+            NavVC.transitioningDelegate = self.transition
             present(NavVC, animated: true)
         case .randomCharacter:
             break
@@ -53,6 +56,19 @@ class RootCollectionViewController: UICollectionViewController, UICollectionView
         }
     }
     
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        let delay = indexPath.item
+        let x = cell.frame.origin.x
+        if indexPath.item % 2 == 0 {
+            cell.frame.origin.x -= view.frame.maxX
+        } else {
+            cell.frame.origin.x += view.frame.maxX
+        }
+        UIView.animate( withDuration: 0.4, delay: TimeInterval(delay) * 0.4, options: []) {
+            cell.frame.origin.x = x
+        }
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         10
     }

@@ -10,11 +10,14 @@ protocol CharacterViewControllerPresenterProtocol: AnyObject {
     func getCharacterList()
     func numberOfRows() -> Int
     func getCharacter(at indexPath: IndexPath) -> Character?
+    func filterContentForSearchText(_ searchText: String)
+    var isFiltering: Bool { get }
     init(characters: [Character], view: StartTableViewController)
 }
 
 class CharacterStarViewControllerPresenter {
     private var characters: [Character]?
+    private var filteredCharacters: [Character]?
     weak private var view: StartTableViewController?
     
     required init(characters: [Character], view: StartTableViewController) {
@@ -24,6 +27,10 @@ class CharacterStarViewControllerPresenter {
 }
 
 extension CharacterStarViewControllerPresenter: CharacterViewControllerPresenterProtocol {
+    var isFiltering: Bool {
+        view?.searchController.isActive ?? false && !(view?.searchBarIsEmpty ?? true)
+    }
+    
     func getCharacterList() {
         NetworkManager.shared.fetchCharacters(from: Link.characters.rawValue) { [weak self] result  in
             switch result {
@@ -39,12 +46,30 @@ extension CharacterStarViewControllerPresenter: CharacterViewControllerPresenter
     }
     
     func numberOfRows() -> Int {
-        characters?.count ?? 0
+        return isFiltering ? (filteredCharacters?.count ?? 0) : (characters?.count ?? 0)
+    }
+    
+    func numberOfFilteredRows() -> Int {
+        filteredCharacters?.count ?? 0
     }
     
     func getCharacter(at indexPath: IndexPath) -> Character? {
+        if isFiltering {
+            guard let character = filteredCharacters?[indexPath.row] else { return nil }
+            return character
+        }
         guard let character = characters?[indexPath.row] else { return nil }
         return character
+    }
+    
+    func filterContentForSearchText(_ searchText: String) {
+        filteredCharacters = characters?.filter({ character in
+            guard let isContain = character.name?
+                .lowercased()
+                .contains(searchText.lowercased()) else { return false}
+            return isContain
+        })
+        view?.tableView.reloadData()
     }
     
 }

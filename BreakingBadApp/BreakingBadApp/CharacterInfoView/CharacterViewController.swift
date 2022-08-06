@@ -17,7 +17,8 @@ class CharacterViewController: UIViewController {
     
     var character: Character! {
         didSet {
-            presenter = CharacterViewControllerPresenter(view: self, character: self.character)
+            presenter = CharacterViewControllerPresenter(view: self,
+                                                         character: self.character)
             presenter.setUpImage()
             presenter.setupLabelsText()
         }
@@ -143,7 +144,9 @@ class CharacterViewController: UIViewController {
     @objc private func closeView() {
         let transition = CATransition()
         transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.timingFunction = CAMediaTimingFunction(
+            name: CAMediaTimingFunctionName.easeInEaseOut
+        )
         transition.type = CATransitionType.push
         transition.subtype = CATransitionSubtype.fromLeft
         self.view.window!.layer.add(transition, forKey: nil)
@@ -174,51 +177,80 @@ class CharacterViewController: UIViewController {
         
         NSLayoutConstraint.activate ([
             
-            characterImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            characterImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,
+                                                    constant: 16),
             characterImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            characterImageView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4 ),
-            characterImageView.widthAnchor.constraint(equalTo: characterImageView.heightAnchor, multiplier: 2 / 3),
+            characterImageView.heightAnchor.constraint(equalTo: view.heightAnchor,
+                                                       multiplier: 0.4 ),
+            characterImageView.widthAnchor.constraint(equalTo: characterImageView.heightAnchor,
+                                                      multiplier: 2 / 3),
             
             spinnerView.centerXAnchor.constraint(equalTo: characterImageView.centerXAnchor),
             spinnerView.centerYAnchor.constraint(equalTo: characterImageView.centerYAnchor),
             spinnerView.heightAnchor.constraint(equalToConstant: 20),
             spinnerView.widthAnchor.constraint(equalToConstant: 20),
             
-            nameLabel.topAnchor.constraint(equalTo: characterImageView.bottomAnchor, constant: 5),
-            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            nameLabel.topAnchor.constraint(equalTo: characterImageView.bottomAnchor,
+                                           constant: 5),
+            nameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                               constant: 10),
+            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                constant: -10),
             
-            birthDayLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 5),
-            birthDayLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            birthDayLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            birthDayLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor,
+                                               constant: 5),
+            birthDayLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                   constant: 10),
+            birthDayLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                    constant: -10),
             
-            occupationLabel.topAnchor.constraint(equalTo: birthDayLabel.bottomAnchor, constant: 5),
-            occupationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            occupationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            occupationLabel.topAnchor.constraint(equalTo: birthDayLabel.bottomAnchor,
+                                                 constant: 5),
+            occupationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                     constant: 10),
+            occupationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                      constant: -10),
             
-            statusLabel.topAnchor.constraint(equalTo: occupationLabel.bottomAnchor, constant: 5),
-            statusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            statusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            statusLabel.topAnchor.constraint(equalTo: occupationLabel.bottomAnchor,
+                                             constant: 5),
+            statusLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                 constant: 10),
+            statusLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                  constant: -10),
             
-            nickNameLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 5),
-            nickNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            nickNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            nickNameLabel.topAnchor.constraint(equalTo: statusLabel.bottomAnchor,
+                                               constant: 5),
+            nickNameLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                   constant: 10),
+            nickNameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                    constant: -10),
             
-            appearanceLabel.topAnchor.constraint(equalTo: nickNameLabel.bottomAnchor, constant: 5),
-            appearanceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            appearanceLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            appearanceLabel.topAnchor.constraint(equalTo: nickNameLabel.bottomAnchor,
+                                                 constant: 5),
+            appearanceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                     constant: 10),
+            appearanceLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                      constant: -10),
             
-            portrayedLabel.topAnchor.constraint(equalTo: appearanceLabel.bottomAnchor, constant: 5),
-            portrayedLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            portrayedLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            portrayedLabel.topAnchor.constraint(equalTo: appearanceLabel.bottomAnchor,
+                                                constant: 5),
+            portrayedLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                    constant: 10),
+            portrayedLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                     constant: -10),
             
-            categoryLabel.topAnchor.constraint(equalTo: portrayedLabel.bottomAnchor, constant: 5),
-            categoryLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            categoryLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            categoryLabel.topAnchor.constraint(equalTo: portrayedLabel.bottomAnchor,
+                                               constant: 5),
+            categoryLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                   constant: 10),
+            categoryLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -10),
             
-            betterCallSaulAppearanceLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 5),
-            betterCallSaulAppearanceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            betterCallSaulAppearanceLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            betterCallSaulAppearanceLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor,
+                                                               constant: 5),
+            betterCallSaulAppearanceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor,
+                                                                   constant: 10),
+            betterCallSaulAppearanceLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor,
+                                                                    constant: -10),
         ])
     }
 }

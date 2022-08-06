@@ -20,7 +20,8 @@ class CharacterTableViewCell: UITableViewCell {
     var presenter: CharacterTableViewCellPresenterProtocol!
     var character: Character? {
         didSet {
-            presenter = CharacterTableViewCellPresenter(view: self, character: character)
+            presenter = CharacterTableViewCellPresenter(view: self,
+                                                        character: character)
             presenter.setImage()
             presenter.setName()
         }
@@ -75,9 +76,12 @@ class CharacterTableViewCell: UITableViewCell {
         spinnerView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate ([
-            characterImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            characterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5),
-            characterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+            characterImageView.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                                    constant: 5),
+            characterImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,
+                                                       constant: -5),
+            characterImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                        constant: 5),
             characterImageView.widthAnchor.constraint(equalToConstant: 70),
             
             spinnerView.centerXAnchor.constraint(equalTo: characterImageView.centerXAnchor),
@@ -85,9 +89,11 @@ class CharacterTableViewCell: UITableViewCell {
             spinnerView.heightAnchor.constraint(equalToConstant: 20),
             spinnerView.widthAnchor.constraint(equalToConstant: 20),
             
-            nameOfCharacterLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
+            nameOfCharacterLabel.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                                      constant: 5),
             nameOfCharacterLabel.leadingAnchor.constraint(equalTo: characterImageView.trailingAnchor, constant: 10),
-            nameOfCharacterLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 5)
+            nameOfCharacterLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+                                                           constant: 5)
         ])
     }
 }
